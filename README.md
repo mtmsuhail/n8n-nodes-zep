@@ -1,48 +1,133 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-zep
 
-# n8n-nodes-starter
+This is an n8n community node for integrating with [Zep Cloud v3 API](https://help.getzep.com/). It allows you to interact with Zep's memory layer and temporal knowledge graph platform for AI assistants and agents in your n8n workflows.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+Zep is a memory layer for AI assistants and agents that continuously learns from user interactions and changing business data to enable personalized, context-aware user experiences.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+## Installation
 
-## Prerequisites
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-You need the following installed on your development machine:
+## Operations
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+This node supports the following Zep Cloud v3 API operations:
 
-## Using this starter
+### User Operations
+- **Create**: Create a new user in Zep
+- **Get**: Retrieve a user by ID
+- **Update**: Update user information
+- **Delete**: Delete a user
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+### Thread Operations  
+- **Create**: Create a new conversation thread
+- **List All**: List all threads
+- **Get Messages**: Retrieve messages for a thread
+- **Add Messages**: Add messages to a thread
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+### Graph Operations
+- **Create**: Create a new knowledge graph
+- **Search**: Search within a knowledge graph
+- **Add Data**: Add data/episodes to a knowledge graph
 
-## More information
+### Session Operations
+- **List**: List all sessions
+- **Create**: Create a new session
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+## Credentials
+
+To use this node, you need to authenticate with Zep Cloud:
+
+1. Sign up for a [Zep Cloud](https://cloud.getzep.com/) account
+2. Generate an API key from your Zep Cloud dashboard
+3. In n8n, create new credentials of type "Zep API"
+4. Enter your Zep API key
+
+### Setting up Zep API Credentials in n8n
+
+1. Go to **Settings** > **Credentials** in your n8n instance
+2. Click **Create New Credential**
+3. Select **Zep API** from the list
+4. Enter your API key from Zep Cloud
+5. Test the connection and save
+
+## Compatibility
+
+- Minimum n8n version: 1.0.0
+- Compatible with Zep Cloud v3 API
+- Tested against n8n 1.x versions
+
+## Usage
+
+### Basic User Management
+
+1. **Create a User**:
+   - Select Resource: User
+   - Operation: Create
+   - Enter User ID, email, first name, and last name
+
+2. **Add Messages to Thread**:
+   - Select Resource: Thread  
+   - Operation: Add Messages
+   - Enter Thread ID
+   - Add messages with role (user/assistant/system) and content
+
+3. **Search Knowledge Graph**:
+   - Select Resource: Graph
+   - Operation: Search
+   - Enter Graph ID and search query
+
+### Example Workflow
+
+Here's a simple workflow to create a user, create a thread, and add a message:
+
+1. **Zep Node 1**: Create User
+   - Resource: User
+   - Operation: Create
+   - User ID: `user123`
+   - Email: `user@example.com`
+
+2. **Zep Node 2**: Create Thread  
+   - Resource: Thread
+   - Operation: Create
+   - Thread ID: `thread456`
+   - User ID: `user123`
+
+3. **Zep Node 3**: Add Messages
+   - Resource: Thread
+   - Operation: Add Messages
+   - Thread ID: `thread456`
+   - Messages: Add user message with content
+
+## API Endpoints Covered
+
+This node integrates with the following Zep Cloud v3 API endpoints:
+
+- `/api/v2/users` - User management
+- `/api/v2/threads` - Thread management  
+- `/api/v2/threads/{threadId}/messages` - Message management
+- `/api/v2/graph` - Knowledge graph operations
+- `/api/v2/sessions` - Session management
+
+## Resources
+
+* [Zep Documentation](https://help.getzep.com/)
+* [Zep Cloud v3 API Reference](https://help.getzep.com/v3/sdk-reference)
+* [n8n Community Nodes Documentation](https://docs.n8n.io/integrations/community-nodes/)
+
+## Version History
+
+### 0.1.0
+- Initial release with core Zep Cloud v3 API operations
+- Support for User, Thread, Graph, and Session management
+- Built-in authentication with Zep API key
+- Comprehensive integration with major Zep Cloud endpoints
+
+## Contributing
+
+Issues and feature requests are welcome! Please check the existing issues before creating new ones.
 
 ## License
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+[MIT](LICENSE.md)
