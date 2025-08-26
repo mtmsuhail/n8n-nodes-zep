@@ -26,18 +26,29 @@
     "lint": "eslint nodes credentials package.json",
     "lintfix": "eslint nodes credentials package.json --fix",
     "prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json",
-    "n8n:dev": "./start-n8n-with-zep.sh"
+    "n8n:dev": "./start-n8n-with-zep.sh",
+    "publish:patch": "./scripts/publish.sh",
+    "publish:minor": "./scripts/publish.sh",
+    "publish:major": "./scripts/publish.sh",
+    "publish:beta": "./scripts/publish.sh",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version",
+    "version:beta": "npm version prerelease --no-git-tag-version --preid=beta",
+    "package:check": "cd dist && npm pack --dry-run",
+    "package:size": "cd dist && npm pack && tar -tzf *.tgz | wc -l && rm -f *.tgz",
+    "clean": "npx rimraf dist node_modules/.cache *.tsbuildinfo"
   },
   "files": [
     "dist"
   ],
-    "n8n": {
-      "n8nNodesApiVersion": 1,
-      "credentials": [
-        "dist/credentials/ZepApi.credentials.js"
-      ],
-                  "nodes": [
-                    "dist/nodes/Zep/Zep.node.js",
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ZepApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Zep/Zep.node.js",
       "dist/nodes/ZepAiTool/ZepAiTool.node.js"
     ]
   },
