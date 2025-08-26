@@ -69,12 +69,6 @@ export class ZepAiTool implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Test Connection',
-						value: 'testConnection',
-						description: 'Simple test to verify the Zep connection is working',
-						action: 'Test connection to Zep',
-					},
-					{
 						name: 'Add Data to Graph',
 						value: 'addDataToGraph',
 						description: 'Add structured or unstructured data to the knowledge graph',
@@ -127,6 +121,12 @@ export class ZepAiTool implements INodeType {
 						value: 'searchGraph',
 						description: 'Search the knowledge graph for information',
 						action: 'Search knowledge graph',
+					},
+					{
+						name: 'Test Connection',
+						value: 'testConnection',
+						description: 'Simple test to verify the Zep connection is working',
+						action: 'Test connection to zep',
 					},
 				],
 				default: 'testConnection',
